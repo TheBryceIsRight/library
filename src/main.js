@@ -15,7 +15,7 @@ const router = new VueRouter({
 
     { path: '/', component: require('./components/Home.vue').default },
     { path: '/create', component: require('./components/CreatePost.vue').default },
-    { path: '/blog/:id', component: require('./components/SingleBlog.vue').default},
+    { path: '/page/:id', component: require('./components/SinglePage.vue').default},
     { path: '/user/signup', component: require('./components/Register.vue').default},
   ],
 })

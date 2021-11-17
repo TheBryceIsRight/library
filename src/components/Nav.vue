@@ -22,7 +22,7 @@
           </li>
           <li class="nav-item">
             <router-link class="nav-link" to="/user/signup"
-              >sign up</router-link
+              >Sign up</router-link
             >
           </li>
         </ul>

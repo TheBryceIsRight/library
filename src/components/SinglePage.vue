@@ -5,7 +5,7 @@
         <div class="card card shadow-lg p-3 mb-5 bg-white rounded mr-5 ml-5">
           <div class="container">
             <div class="card-head" style="padding: 4rem">
-              <h1 style="font-size: 6rem">{{ blog.Title }}</h1>
+              <h1 style="font-size: 6rem">{{ page.title }}</h1>
 
               <button
                 type="button"
@@ -27,7 +27,7 @@
             </div>
             <hr />
             <p style="line-height: 26pt">
-              {{ blog.Body }}
+              {{ page.description }}
             </p>
           </div>
         </div>
@@ -59,13 +59,13 @@
             <form>
               <div class="form-group">
                 <label for="recipient-name" class="col-form-label"
-                  >Title:</label
+                  >title:</label
                 >
-                <input type="text" v-model="blog.Title" class="form-control" />
+                <input type="text" v-model="page.title" class="form-control" />
               </div>
               <div class="form-group">
-                <label for="message-text" class="col-form-label">Body:</label>
-                <textarea class="form-control" v-model="blog.Body"></textarea>
+                <label for="message-text" class="col-form-label">description:</label>
+                <textarea class="form-control" v-model="page.description"></textarea>
               </div>
             </form>
           </div>
@@ -84,10 +84,10 @@
 import gql from "graphql-tag";
 
 export default {
-  name: "SingleBlog",
+  name: "SinglePage",
   data() {
     return {
-      blog: [],
+      page: [],
       id: this.$route.params.id,
     };
   },
@@ -97,24 +97,24 @@ export default {
       this.$apollo
         .mutate({
           mutation: gql`
-            mutation updateBlog($id: ID!, $Title: String!, $Body: String!) {
-              updateBlog(
+            mutation updatePage($id: ID!, $Title: String!, $Body: String!) {
+              updatePage(
                 input: {
                   where: { id: $id }
-                  data: { Title: $Title, Body: $Body }
+                  data: { title: $title, description: $description }
                 }
               ) {
-                blog {
-                  Title
-                  Body
+                page {
+                  title
+                  description
                 }
               }
             }
           `,
           variables: {
             id: this.id,
-            Title: this.blog.Title,
-            Body: this.blog.Body,
+            title: this.page.title,
+            description: this.page.description,
           },
         })
         .then((res) => {
@@ -129,11 +129,11 @@ export default {
         this.$apollo
           .mutate({
             mutation: gql`
-              mutation deleteBlog($id: ID!) {
-                deleteBlog(input: { where: { id: $id } }) {
-                  blog {
-                    Title
-                    Body
+              mutation deletePage($id: ID!) {
+                deletePage(input: { where: { id: $id } }) {
+                  page {
+                    title
+                    description
                   }
                 }
               }
@@ -152,13 +152,13 @@ export default {
   },
 
   apollo: {
-    blog: {
+    page: {
       query: gql`
-        query blog($id: ID!) {
-          blog(id: $id) {
+        query page($id: ID!) {
+          page(id: $id) {
             id
-            Title
-            Body
+            title
+            description
           }
         }
       `,

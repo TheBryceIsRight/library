@@ -10,12 +10,12 @@
       <div class="card card shadow-lg p-3 mb-5 bg-white rounded mr-5 ml-5">
         <form>
           <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Title:</label>
-            <input type="text" v-model="Title" class="form-control" />
+            <label for="recipient-name" class="col-form-label">title:</label>
+            <input type="text" v-model="title" class="form-control" />
           </div>
           <div class="form-group">
-            <label for="message-text" class="col-form-label">Body:</label>
-            <textarea class="form-control" rows="8" v-model="Body"></textarea>
+            <label for="message-text" class="col-form-label">description:</label>
+            <textarea class="form-control" rows="8" v-model="description"></textarea>
           </div>
         </form>
         <div>
@@ -33,29 +33,29 @@ import gql from "graphql-tag";
 export default {
   data() {
     return {
-      Title: "",
-      Body: "",
+      title: "",
+      description: "",
     };
   },
 
   methods: {
     createPost() {
-      if (this.Title && this.Body) {
+      if (this.title && this.description) {
         this.$apollo
           .mutate({
             mutation: gql`
-              mutation createBlog($Title: String!, $Body: String!) {
-                createBlog(input: { data: { Title: $Title, Body: $Body } }) {
-                  blog {
-                    Title
-                    Body
+              mutation createBlog($title: String!, $description: String!) {
+                createPage(input: { data: { title: $title, description: $description } }) {
+                  page {
+                    title
+                    description
                   }
                 }
               }
             `,
             variables: {
-              Title: this.Title,
-              Body: this.Body,
+              title: this.title,
+              description: this.description,
             },
           })
           .then((res) => {
